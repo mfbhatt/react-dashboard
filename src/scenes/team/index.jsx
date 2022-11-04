@@ -2,9 +2,10 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import configData from './../../config.json';
 
-import useFetch from '../../hooks/useFetch';
+import { useQuery } from '@apollo/client';
+
+ import { GET_USERS_QUERY } from "./../../common/constants";
 
 const Team = () => {
   const theme = useTheme();
@@ -26,9 +27,10 @@ const Team = () => {
     }
   ];
 
-
-  const { data, loading, error, reFetchData } = useFetch(configData.SERVER_URL);
-
+  const { loading, error, data } = useQuery(GET_USERS_QUERY);
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
+   
   return (
     <Box m="20px">
       <Header title="TEAM" subtitle="Managing the Team Members" />
@@ -61,7 +63,7 @@ const Team = () => {
           },
         }}
       >
-        {!loading? (<DataGrid checkboxSelection rows={data} columns={columns} />): (<div>loading...</div>)}
+        {!loading? (<DataGrid checkboxSelection rows={data.getAllUsers} columns={columns} />): (<div>loading...</div>)}
       </Box>
     </Box>
   );

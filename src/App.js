@@ -1,3 +1,4 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { useState } from "react";
 import { ProSidebarProvider } from 'react-pro-sidebar';
@@ -19,7 +20,12 @@ import Team from "./scenes/team";
 // import Line from "./scenes/line";
 // import Pie from "./scenes/pie";
 // import Team from "./scenes/team";
+import configData from './config.json';
 import { ColorModeContext, useMode } from "./theme";
+const client = new ApolloClient({
+  uri: configData.SERVER_URL,
+  cache: new InMemoryCache(),
+});
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -28,7 +34,7 @@ function App() {
   return (
     
     <ColorModeContext.Provider value={colorMode}>
-      
+      <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
        
@@ -54,7 +60,7 @@ function App() {
           </ProSidebarProvider>
         </div>
       </ThemeProvider>
-
+      </ApolloProvider>
 
     </ColorModeContext.Provider>
    

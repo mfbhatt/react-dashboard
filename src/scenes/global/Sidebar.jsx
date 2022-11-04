@@ -55,9 +55,11 @@ const AppSidebar = () => {
         },
         "& .menu-anchor:hover": {
           color: "#868dfb !important",
+          background: `${colors.primary[100]} !important`,
         },
         "& .menu-item.active > .menu-anchor": {
-          color: "#6870fa !important",
+          background: `${colors.primary[400]} !important`,
+          color: `${colors.greenAccent[400]} !important`,
         },
       }}
     >
